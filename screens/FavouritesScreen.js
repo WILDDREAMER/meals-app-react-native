@@ -1,10 +1,11 @@
 import React from 'react';
-import MealList from '../components/MealList';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import MealLst from '../components/MealList'
+import MealList from '../components/MealList';
+import HeaderButton from '../components/headerButton'
 import { MEALS } from '../data/dummyData'
 
-const FavouritesScreen = props => {
+const FavoritesScreen = props => {
     const favMeals = MEALS.filter(meal => meal.id === 'm3' || meal.id === 'm2')
     return (
         <MealList
@@ -14,8 +15,21 @@ const FavouritesScreen = props => {
     );
 };
 
-FavouritesScreen.navigationOptions = {
-    headerTitle: 'Your Favorites'
+FavoritesScreen.navigationOptions = (navData) => {
+    return {
+        headerTitle: 'Your Favorite',
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title='Menu'
+                    iconName='ios-menu'
+                    onPress={() => {
+                        navData.navigation.toggleDrawer();
+                    }}
+                />
+            </HeaderButtons>
+        )
+    };
 };
 
-export default FavouritesScreen; 
+export default FavoritesScreen; 

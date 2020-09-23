@@ -27,7 +27,7 @@ const MealList = props => {
         <View style={styles.screen}>
             <FlatList
                 data={props.listData}
-                keyExtractor={(item, index) => item.id}
+                keyExtractor={item => item.id}
                 renderItem={renderMealItem}
                 style={{ width: '100%' }}
             />
