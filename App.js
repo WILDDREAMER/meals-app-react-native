@@ -1,14 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { enableScreens} from 'react-native-screens'
+import { enableScreens } from 'react-native-screens'
+import { createStore, combineReducers } from 'redux'
+import { Provider } from 'react-redux'
 
 import * as Font from 'expo-font';
-import {AppLoading} from 'expo'
+import { AppLoading } from 'expo'
 
 import MealsNavigator from './navigation/MealsNavigation';
+import mealsReducer from './store/reducers/meals'
 
 enableScreens();
+
+const rootReducer = combineReducers({
+  meals: mealsReducer
+});
+const store = createStore(rootReducer);
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -19,7 +27,7 @@ const fetchFonts = () => {
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
-  if (!fontLoaded){
+  if (!fontLoaded) {
     return (
       <AppLoading
         startAsync={fetchFonts}
@@ -28,7 +36,9 @@ export default function App() {
     )
   }
   return (
-    <MealsNavigator/>
+    <Provider store={store}>
+      <MealsNavigator />
+    </Provider>
   );
 }
 //expo install react-native-gesture-handler react-native-screens
